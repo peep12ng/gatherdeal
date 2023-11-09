@@ -1,0 +1,1 @@
+from .hotdeals import hotdeal_ns

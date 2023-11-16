@@ -1,9 +1,8 @@
 from injector import inject
 
-from .quasarzone import QuasarzoneHotdealUpdateService
-from .fmkorea import FmkoreaHotdealUpdateService
-
 from ...repositories import HotdealRepository
+
+from .update import FmkoreaUpdater, QuasarzoneUpdater
 
 class HotdealService:
 
@@ -23,14 +22,14 @@ class HotdealService:
         else:
             self._hotdeal_repo = hotdeal_repo
 
-        self._hotdeal_update_services = [
-            QuasarzoneHotdealUpdateService(),
-            FmkoreaHotdealUpdateService(),
+        self._hotdeal_updater = [
+            QuasarzoneUpdater(),
+            FmkoreaUpdater(),
         ]
     
     def update_all_hotdeal_update_services(self):
 
-        for s in self._hotdeal_update_services:
+        for s in self._hotdeal_updater:
             s.update(self._hotdeal_repo)
             self._hotdeal_repo.commit()
             self._hotdeal_repo.close()
